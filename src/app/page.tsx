@@ -3,6 +3,7 @@ import DashboardMockup from "@/components/landing/dashboard-mockup";
 import DataPreview from "@/components/landing/data-preview";
 import Hero from "@/components/landing/hero";
 import ProblemSection from "@/components/landing/problem-section";
+import QuickEstimate from "@/components/landing/quick-estimate";
 import SolutionSection from "@/components/landing/solution-section";
 import UspSection from "@/components/landing/usp-section";
 import Footer from "@/components/layout/footer";
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <main className="flex-grow">
         <Hero />
+        <QuickEstimate />
         <ProblemSection />
         <SolutionSection />
         <DataPreview />

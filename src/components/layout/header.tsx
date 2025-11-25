@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Logo } from "../logo";
-import Image from 'next/image';
-import { DemoVideoDialog } from "../landing/demo-video-dialog";
 
 export default function Header() {
   return (
@@ -16,11 +14,9 @@ export default function Header() {
             <Button variant="ghost" asChild>
               <Link href="/login">Login</Link>
             </Button>
-            <DemoVideoDialog>
-                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                    <div className="cursor-pointer">Free Demo</div>
-                </Button>
-            </DemoVideoDialog>
+            <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Link href="/login">Get Started</Link>
+            </Button>
           </nav>
         </div>
       </div>
