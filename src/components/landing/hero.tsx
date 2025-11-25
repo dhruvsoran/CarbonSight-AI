@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ArrowRight, PlayCircle } from "lucide-react";
+import { DemoVideoDialog } from "./demo-video-dialog";
 
 export default function Hero() {
   return (
@@ -18,11 +19,13 @@ export default function Hero() {
               Get Started <ArrowRight className="ml-2" />
             </Link>
           </Button>
-          <Button size="lg" variant="outline" asChild className="bg-transparent">
-            <Link href="#">
-              <PlayCircle className="mr-2" /> Watch Free Demo
-            </Link>
-          </Button>
+          <DemoVideoDialog>
+            <Button size="lg" variant="outline" asChild className="bg-transparent">
+              <div className="cursor-pointer">
+                <PlayCircle className="mr-2" /> Watch Free Demo
+              </div>
+            </Button>
+          </DemoVideoDialog>
         </div>
       </div>
     </section>
