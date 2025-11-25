@@ -1,4 +1,4 @@
-import { LayoutDashboard, Fuel, Sprout, Route, FileText, Bot } from 'lucide-react';
+import { LayoutDashboard, Fuel, Sprout, Route, FileText, Bot, User } from 'lucide-react';
 import type { NavItem } from '@/types';
 
 export const NAV_ITEMS: NavItem[] = [
@@ -6,6 +6,11 @@ export const NAV_ITEMS: NavItem[] = [
     title: 'Dashboard',
     href: '/dashboard',
     icon: LayoutDashboard,
+  },
+  {
+    title: 'Profile',
+    href: '/dashboard/profile',
+    icon: User,
   },
   {
     title: 'Carbon Estimator',
