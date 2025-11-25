@@ -20,7 +20,7 @@ export default function Hero() {
                 priority
             />
         )}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/50 to-transparent -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent -z-10" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h1 className="text-5xl md:text-7xl font-bold text-foreground tracking-tighter">
           AI-Powered Carbon Intelligence <br/> for <span className="text-primary">Greener Mines</span>

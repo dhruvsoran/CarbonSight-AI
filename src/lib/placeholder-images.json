@@ -8,9 +8,9 @@
     },
     {
       "id": "hero-background",
-      "description": "A striking image of a modern, clean mining operation, representing sustainable industry.",
-      "imageUrl": "https://images.unsplash.com/photo-1629080004938-55a4a55d7a29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdXN0YWluYWJsZSUyMG1pbmluZ3xlbnwwfHx8fDE3MTc4NTgzMDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "sustainable mining"
+      "description": "An abstract image of a green circuit board in the shape of a leaf, representing green technology.",
+      "imageUrl": "https://images.unsplash.com/photo-1592289522923-99201f7c9383?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmb3Jlc3QlMjBjaXJjdWl0JTIwYm9hcmR8ZW58MHx8fHwxNzE3ODU5OTc0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "green technology"
     }
   ]
 }
