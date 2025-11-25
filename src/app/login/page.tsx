@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/logo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Logo } from "../logo";
+import Image from 'next/image';
 
 export default function Header() {
   return (
