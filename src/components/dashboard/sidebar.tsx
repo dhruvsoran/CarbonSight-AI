@@ -16,7 +16,6 @@ import { Logo } from "../logo";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { LogOut, Settings } from "lucide-react";
-import Image from 'next/image';
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
@@ -27,8 +26,8 @@ export default function DashboardSidebar() {
         <div className="group-data-[collapsible=icon]:hidden">
             <Logo />
         </div>
-        <div className="hidden group-data-[collapsible=icon]:block">
-            <Image src="/logo.png" alt="CarbonSight AI Logo" width={32} height={32} />
+        <div className="hidden group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+            <Logo size={32} />
         </div>
       </SidebarHeader>
       <Separator />
