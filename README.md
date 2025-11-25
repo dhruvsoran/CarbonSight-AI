@@ -4,7 +4,7 @@ AI-Powered Carbon Intelligence for Greener Mines**
 
 CarbonSight AI is a real-time, AI-driven carbon monitoring and analytics platform designed specifically for coal mines. It enables industries to **measure, track, analyze, predict, and reduce carbon emissions** with high accuracy using AI, live environmental APIs, and automated reporting.
 
----
+AVAILABLE AT : https://carbonsight-ai.onrender.com/
 
 ## 🚀 **Core Features**
 
