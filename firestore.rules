@@ -1,0 +1,95 @@
+rules_version = '2';
+
+/**
+ * @name Firebase Security Rules: Prototyping Mode
+ * @description These rules are generated for rapid prototyping and development.
+ * They enforce strict authorization based on user identity but remain flexible
+ * on data schemas to allow for quick iteration on the data model.
+ *
+ * @philosophy
+ * This ruleset enforces a strict user-ownership model. All user-specific data,
+ * including profiles, is nested under a path containing the user's unique ID (`userId`).
+ * This ensures that a user can only ever access their own data, providing a
+ * strong security foundation by default.
+ *
+ * @structure
+ * - /users/{userId}: The root document for a user. A user can create their
+ *   own document but cannot modify or delete it later.
+ * - /users/{userId}/profiles/{profileId}: A subcollection containing the user's
+ *   profile document(s). A user has full create, read, update, and delete
+ *   permissions on their own profiles.
+ *
+ * @decisions
+ * - User Enumeration Disabled: Listing the top-level `/users` collection is
+ *   explicitly forbidden to prevent malicious actors from discovering all
+ *   registered user IDs.
+ * - Path-Based Security: Authorization is derived directly from the document
+ *   path (`/users/{userId}`), where `{userId}` must match the authenticated
+ *   user's UID. This avoids slow and costly `get()` calls to other documents
+ *   for authorization checks.
+ * - Relational Integrity: On creation, key identifier fields (e.g., `userId`
+ *   inside a profile document) are validated to ensure they match the path,
+ *   enforcing data consistency. These identifiers are immutable on update.
+ */
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ------------------------------------------------------------------------
+    // Helper Functions
+    // ------------------------------------------------------------------------
+
+    /**
+     * @description Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * @description Checks if the authenticated user's ID matches the
+     * requested document's owner ID from the path.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // ------------------------------------------------------------------------
+    // Collection Rules
+    // ------------------------------------------------------------------------
+
+    /**
+     * @description A User document, which acts as the root for all of a
+     * user's private data.
+     * @path /users/{userId}
+     * @allow (get) An authenticated user reads their own user document.
+     * @allow (create) A new user creates their own user document upon signup.
+     * @deny (list) A user tries to list all documents in the `/users` collection.
+     * @deny (update) A user tries to modify their root document after creation.
+     * @principle Restricts access to a user's own data tree and prevents user enumeration.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // Prevents listing all users
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if false; // Per IR, document is immutable after creation
+      allow delete: if false; // Per IR, document is immutable after creation
+
+      /**
+       * @description A UserProfile document containing detailed information for a user.
+       * @path /users/{userId}/profiles/{profileId}
+       * @allow (create) An authenticated user creates a new profile for themselves.
+       * @allow (update) An authenticated user updates their own existing profile.
+       * @deny (get) An unauthenticated user tries to read someone's profile.
+       * @deny (create) A user tries to create a profile for another user.
+       * @principle Enforces strict document ownership for all read and write operations.
+       */
+      match /profiles/{profileId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.userId == userId;
+        allow update: if isOwner(userId) && resource != null && request.resource.data.userId == resource.data.userId;
+        allow delete: if isOwner(userId) && resource != null;
+      }
+    }
+  }
+}
