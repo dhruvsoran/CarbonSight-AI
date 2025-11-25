@@ -1,14 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 
 export function Logo({
   size = 40,
@@ -18,6 +10,10 @@ export function Logo({
   collapsible?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogoClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   const logoContent = (
     <div className="flex items-center gap-3">
@@ -60,31 +56,12 @@ export function Logo({
   );
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <button
-          type="button"
-          className={`focus:outline-none p-2 rounded-lg ${isOpen ? 'bg-primary' : ''}`}
-        >
-          {logoContent}
-        </button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>About CarbonSight AI</DialogTitle>
-          <DialogDescription>
-            AI-Powered Carbon Intelligence for Greener Mines
-          </DialogDescription>
-        </DialogHeader>
-        <div className="space-y-4 text-sm text-muted-foreground">
-          <p>
-            This application is a demonstration of how AI can be leveraged to help heavy industries like mining track, analyze, and reduce their carbon footprint.
-          </p>
-          <p>
-            <strong>Version:</strong> 1.0.0
-          </p>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <button
+      type="button"
+      onClick={handleLogoClick}
+      className={`focus:outline-none p-2 rounded-lg ${isOpen ? 'bg-primary' : ''}`}
+    >
+      {logoContent}
+    </button>
   );
 }
