@@ -23,12 +23,7 @@ export default function DashboardSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <div className="group-data-[collapsible=icon]:hidden">
-            <Logo />
-        </div>
-        <div className="hidden group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
-            <Logo size={32} />
-        </div>
+        <Logo collapsible />
       </SidebarHeader>
       <Separator />
       <SidebarContent>
