@@ -8,11 +8,9 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Image from "next/image";
-import { placeholderImages } from "@/lib/placeholder-images";
+import { PlayCircle } from "lucide-react";
 
 export function DemoVideoDialog({ children }: { children: React.ReactNode }) {
-  const mockupImage = placeholderImages.find(img => img.id === 'dashboard-mockup');
 
   return (
     <Dialog>
@@ -24,21 +22,10 @@ export function DemoVideoDialog({ children }: { children: React.ReactNode }) {
             A glimpse of our platform's key features.
           </DialogDescription>
         </DialogHeader>
-        <div className="aspect-video rounded-lg overflow-hidden border bg-muted flex items-center justify-center">
-            {mockupImage ? (
-                <Image
-                    src={mockupImage.imageUrl}
-                    alt={mockupImage.description}
-                    data-ai-hint={mockupImage.imageHint}
-                    width={1280}
-                    height={720}
-                    className="object-cover w-full h-full"
-                />
-            ) : (
-                <div className="text-center text-muted-foreground">
-                    <p>Dashboard preview image not found.</p>
-                </div>
-            )}
+        <div className="aspect-video rounded-lg overflow-hidden border bg-muted flex flex-col items-center justify-center text-center text-muted-foreground">
+            <PlayCircle className="h-16 w-16 text-muted-foreground/50 mb-4" />
+            <p className="font-semibold">Your product demo video here.</p>
+            <p className="text-sm">Provide a video URL to be embedded.</p>
         </div>
       </DialogContent>
     </Dialog>
