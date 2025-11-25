@@ -9,14 +9,14 @@ import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/logo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/firebase";
+import { useFirebase } from "@/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 
 export default function SignupPage() {
   const router = useRouter();
-  const auth = useAuth();
+  const { auth } = useFirebase();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,14 +38,25 @@ export default function SignupPage() {
       await createUserWithEmailAndPassword(auth, email, password);
       toast({
         title: "Account Created",
-        description: "You have been successfully signed up.",
+        description: "You have been successfully signed up. Please login.",
       });
-      router.push("/dashboard/profile");
+      router.push("/login");
     } catch (error: any) {
-      console.error("Signup failed", error);
+      let description = "An unexpected error occurred.";
+       switch (error.code) {
+        case "auth/email-already-in-use":
+          description = "This email is already registered. Please login instead.";
+          break;
+        case "auth/weak-password":
+          description = "The password is too weak. Please use at least 6 characters.";
+          break;
+        default:
+          description = error.message;
+          break;
+      }
       toast({
         title: "Signup Failed",
-        description: error.message || "An unexpected error occurred.",
+        description,
         variant: "destructive",
       });
     } finally {

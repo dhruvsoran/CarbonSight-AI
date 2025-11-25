@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/logo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/firebase";
+import { useFirebase } from "@/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
@@ -16,7 +16,7 @@ import { Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const auth = useAuth();
+  const { auth } = useFirebase();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,12 +28,26 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      // onAuthStateChanged in provider will handle redirect
     } catch (error: any) {
-      console.error("Login failed", error);
+      let description = "An unexpected error occurred.";
+      switch (error.code) {
+        case "auth/user-not-found":
+          description = "No account found with this email address.";
+          break;
+        case "auth/wrong-password":
+          description = "Incorrect password. Please try again.";
+          break;
+        case "auth/invalid-credential":
+           description = "The email or password you entered is incorrect.";
+           break;
+        default:
+          description = error.message;
+          break;
+      }
       toast({
         title: "Login Failed",
-        description: error.message || "An unexpected error occurred.",
+        description,
         variant: "destructive",
       });
     } finally {
